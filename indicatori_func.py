@@ -344,7 +344,7 @@ def calcolo_indicatori(dict,is_candle_open):
             #print('[debug] fine calcolo-indicatori prima degli append')
 
             if is_candle_open == True:
-                dict['supertrend'].append(st[-1])
+                dict['supertrend'] = st
                 dict['fibo'].append(fibo[-1])
                 dict['fibo_r1'].append(fibo_r1[-1])
                 dict['fibo_r2'].append(fibo_r2[-1])
@@ -362,7 +362,7 @@ def calcolo_indicatori(dict,is_candle_open):
                 dict['ema34'].append(ema34[-1])
 
                 dict['rsi'].append(rsiClose[-1])
-                dict['atr'].append(atr[-1])
+                dict['atr']=atr
                 dict['volume_ma_std30'].append(linea_std_volume)
 
             else:
