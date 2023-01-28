@@ -44,10 +44,10 @@ class Bot():
     def __init__(self) -> None:
         self.core_dict = {}
 
-        self.exchange = ccxtpro.binance()
+        self.exchange = ccxtpro.binanceus()
         self.exchange.enableRateLimit = True
 
-        self.symbols = ['BTCUSDT','ETHUSDT','XRPUSDT']
+        self.symbols = ['BTCUSDT','ETHUSDT']
         #self.symbols = ['ETHUSDT']
         #asyncio.run(crypto_finder(self, print, config.EXCHANGE_TOKENS, config.NUM_CRYPTO, 'Rsi/volume'))
 
@@ -65,8 +65,11 @@ class Bot():
         return timeframe, candles
 
     def clear_dict(self,dict):
-        for i in dict.keys():
-            dict.setdefault(i)
+
+        for s in self.symbols:
+            for tf in config.TIMEFRAMES:
+                for i in dict[s][tf].keys():
+                    dict[s][tf][i] = []
 
     async def open_trading_session(self):
         try:
@@ -117,8 +120,7 @@ class Bot():
                     for tf in config.TIMEFRAMES:
                         await asyncio.gather(*[self.trading(symbol, tf)])
                 self.clear_dict(self.core_dict)
-
-            await self.exchange.close()
+                await self.exchange.close()
 
         except Exception as e:
             print(f'Errore in open_trading_session: {e}')
@@ -168,10 +170,10 @@ class Bot():
 
             changed = True
             os.system('cls||clear')
-
-            print(f"simbolo: {symbol} vwap_3_m: {self.core_dict[symbol]['5m']['vwap_3_m'][-1]}")
-            print(f"simbolo: {symbol} st_1h: {self.core_dict[symbol]['1h']['supertrend'][-1]}")
-            print(f"simbolo: {symbol} st_4h: {self.core_dict[symbol]['4h']['supertrend'][-1]}")
+            if tf =='5m':
+                print(f"simbolo: {symbol} vwap_3_m: {self.core_dict[symbol][tf]['vwap_3_m'][-1]}")
+            else:
+                print(f"simbolo: {symbol} st {tf}: {self.core_dict[symbol][tf]['supertrend'][-1]}")
 
             for strat in STRATEGIE:
 
