@@ -123,10 +123,7 @@ def Vwap_volume_profile(dict,prezzo):
 
 def vwap_3(dict,prezzo):
     try:
-        risk_reward = 1/1.2
-        #df = pd.DataFrame({'close':dict['close'][-250:],'low':dict['low'][-250:],'high':dict['high'][-250:],'volume':dict['volume'][-250:]})
-        atr_tp = dict['atr'][-1] 
-        atr_tp *= 1.4
+
         now = datetime.now()
         dt_string = now.strftime("%H:%M:%S")
         ora = int(dt_string[:2] + dt_string[3:5])
@@ -139,10 +136,7 @@ def vwap_3(dict,prezzo):
 
 
 def supertrend_strat(dict,prezzo):
-    risk_reward = 1/1.2
-    #df = pd.DataFrame({'close':dict['close'][-250:],'low':dict['low'][-250:],'high':dict['high'][-250:],'volume':dict['volume'][-250:]})
-    atr_tp = dict['atr'][-1] 
-    atr_tp *= 1.4
+
 
 
     if (dict['close'][-2] >= dict['supertrend'][-2] and dict['close'][-1] <=dict['supertrend'][-1]) or (dict['close'][-2] <= dict['supertrend'][-2] and dict['close'][-1] >=dict['supertrend'][-1]):
